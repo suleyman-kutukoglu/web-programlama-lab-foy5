@@ -1,0 +1,100 @@
+ 
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	 xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+<title>ogrencis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background-color:#33475b" onload="load();">
+ 
+ <div class="container">
+  <div class="panel panel-default">
+	 <div style="text-align: center	;background-color:#33475b">---------------------------------------------------</div>
+	  <div style="text-align: center	;background-color:#33475b">---------------------------------------------------</div>
+	  <div style="text-align: center	;background-color:#33475b"><a style="text-align:center;" th:href="@{getPageOgrenciAdd}" class="btn btn-warning">Yeni Öğrenci Ekle</a></div>
+	  <div style="text-align: center	;background-color:#33475b">---------------------------------------------------</div>
+	  <div style="text-align: center	;background-color:#33475b">---------------------------------------------------</div>
+        <table id="table " border="1" class="table table-hover">
+            <tr> 
+	            <th> Öğrenci ID </th>
+	            <th> Öğrenci İsim </th>
+	            <th> Öğrenci Email </th>
+	            <th> Öğrenci Bilgilerini Güncelle </th>
+	            <th> Öğrenciyi Sil (Geri alınamaz) </th>
+            </tr> 
+            <tbody>
+        <tr th:each="data : ${datas}">
+	        <td th:text="${data.ogrenciId}"/>
+	        <td th:text="${data.ogrenciName}"/>
+	        <td th:text="${data.email}"/>
+	        <td> <a class="btn btn-light fa fa-pencil" th:href="@{edit/{id}(id=${data.ogrenciId})}"  > Düzenle </a>  </td>
+	   	    <td> <a class="btn btn-light fa fa-trash-o" th:href="@{ogrenciDelete/{id}(id=${data.ogrenciId})}"  > Sil </a>  </td>
+   		</tr>      
+    	</tbody>   
+        </table>
+       
+      </div>      
+ </div>    
+     
+   <!--  <script type="text/javascript">
+     data = "";
+    submit = function(){
+          
+            $.ajax({
+                url:'saveOrUpdate',
+                type:'POST',
+                data:{ogrenciId:$("#ogrenciId").val(),ogrenciName:$('#ogrenciName').val(),email:$('#email').val()},
+                success: function(response){
+                        alert(response.message);
+                        load();    
+                }              
+            });        
+    }
+     
+    delete_ = function(id){     
+         $.ajax({
+            url:'delete',
+            type:'POST',
+            data:{ogrenci_id:id},
+            success: function(response){
+                    alert(response.message);
+                    load();
+            }              
+	        });
+	}
+	     
+ 
+    edit = function (index){
+        $("#ogrenciId").val(data[index].ogrenciId);
+        $("#ogrenciName").val(data[index].ogrenciName);
+        $("#email").val(data[index].email);
+         
+    }
+     
+     
+    load = function(){ 
+        $.ajax({
+            url:'list',
+            type:'POST',
+            success: function(response){
+                    data = response.data;
+                    $('.tr').remove();
+                    for(i=0; i<response.data.length; i++){                  
+                        $("#table").append("<tr class='tr'> <td> "+response.data[i].ogrenciName+" </td> <td> "+response.data[i].email+" </td> <td> <a href='#' onclick= edit("+i+");> Edit </a>  </td> </td> <td> <a href='#' onclick='delete_("+response.data[i].ogrenciId+");'> Delete </a>  </td> </tr>");
+                    }          
+            }              
+        });
+         
+    }
+         
+    </script>
+     -->
+</body>
+</html>
